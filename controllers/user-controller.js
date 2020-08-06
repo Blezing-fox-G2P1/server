@@ -22,39 +22,59 @@ class UserController {
                 next(err)
             })
     }
+  
+    static async postLogin(req, res, next) {
+      let { email, password } = req.body
+      try {
+        const userLogin = await User.findOne({ where: { email } })
+        if (!userLogin) {
+          throw { name: "Invalid email & password!" }
+        }
+        if (!comparePassword(password, userLogin.password)) {
+          throw { name: "Invalid email & password!" }
+        } else {
+          const token = signToken({ email })
+          res.status(200).json({
+            access_token: token
+          })
+        }
+      } catch (err) {
+        next(err)
+      }
+    }
 
 
     //LOGIN
-    static login(req, res, next) {
-        let inputEmail = req.body.email
-        let inputPassword = req.body.password
-        let token = signToken(payload)
+    // static login(req, res, next) {
+    //     let inputEmail = req.body.email
+    //     let inputPassword = req.body.password
+    //     let token = signToken(payload)
 
-        User.findOne({
-            where: {
-                email: inputEmail
-            }
-        })
-            .then(result => {
-                if (result !== null) {
-                    if (comparePassword(inputPassword, result.password)) {
-                        let payload = {
-                            email: result.email
-                        }
-                        res.status(200).json({ token })
-                    }
-                    else {
-                        throw { name: "Bad Request" };
-                    }
+    //     User.findOne({
+    //         where: {
+    //             email: inputEmail
+    //         }
+    //     })
+    //         .then(result => {
+    //             if (result !== null) {
+    //                 if (comparePassword(inputPassword, result.password)) {
+    //                     let payload = {
+    //                         email: result.email
+    //                     }
+    //                     res.status(200).json({ token })
+    //                 }
+    //                 else {
+    //                     throw { name: "Bad Request" };
+    //                 }
 
-                } else {
-                    throw { name: "Bad Request" };
-                }
-            })
-            .catch(err => {
-                next(err)
-            })
-    }
+    //             } else {
+    //                 throw { name: "Bad Request" };
+    //             }
+    //         })
+    //         .catch(err => {
+    //             next(err)
+    //         })
+    // }
 }
 
 module.exports = UserController;
