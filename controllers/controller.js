@@ -27,6 +27,9 @@ class Controller {
     }
 
   }
+  static hitZomato(req, res, next) {
+    
+  }
 }
 
 module.exports = Controller
