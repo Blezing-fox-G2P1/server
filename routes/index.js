@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Controller = require('../controller/');
+const Controller = require('../controller/controller.js');
 
-//Route1
-router.get('/', Controller.showAll)
-router.get('/', Controller.showAll)
-
+router.get('/meals', Controller.hitMealDB)
 
 module.exports = router;
