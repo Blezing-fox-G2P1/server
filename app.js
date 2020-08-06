@@ -8,5 +8,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', index);
 
 app.listen(PORT, () => {
-console.log(`IS GO PORT`);
+  console.log(`IS GO PORT`);
 })
