@@ -2,41 +2,26 @@ const { verifyToken } = require('../helpers/jwt.js')
 const { User } = require('../models/index.js')
 
 async function authentication(req, res, next) {
-    let token = req.headers.token
-    if (token) {
-
-        try {
-            let payload = verifyToken(token)
-
-            let currentUser = await User.findOne({
-                where: {
-                    email: payload.email
-                }
-            })
-
-            if (currentUser) {
-                req.currentUser = currentUser
-                next();
-            } else {
-                next ({
-                    code: "401",
-                    message: "Please login first!"
-                })
-            }
-
-        } catch (err) {
-            next ({
-                code: "500",
-                message: "Internal server error"
-            })
-        }
-
+  const token = req.headers.token
+  try {
+    if (!token) {
+      throw { name: 'You are unauthenticated to make this request' }
     } else {
-        next ({
-            code: "401",
-            message: "Please login first!"
-        })
+      console.log(token)
+      const { email } = verifyToken(token)
+      const user = await User.findOne({ where: { email } })
+      if (!user) {
+        throw { name: 'Your token invalid' }
+      } else {
+        next()
+      }
     }
+  } catch (err) {
+    console.log(err)
+    next({
+      name: err.name
+    })
+  }
 }
 
 module.exports = { authentication }

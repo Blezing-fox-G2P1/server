@@ -6,8 +6,8 @@ const Controller = require('../controllers/controller.js');
 
 const userRoutes = require('./user-router')
 
-router.get('/meals', authentication, Controller.hitMealDB)
-router.get('/restaurant', Controller.hitZomato)
+router.get('/meals', Controller.hitMealDB)
+router.get('/restaurant', authentication,  Controller.hitZomato)
 
 router.post('/nutrition', Controller.hitEdamam)
 
