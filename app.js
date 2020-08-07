@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const routes = require('./routes/')
-const errorHandler = require('./midlewares/errorHandler')
+const errorHandler = require('./middlewares/errorHandler')
 const cors = require('cors')
 const PORT = process.env.PORT;
 
@@ -15,5 +15,5 @@ app.use('/', routes);
 app.use(errorHandler)
 
 app.listen(PORT, () => {
-  console.log(`App running at http://localhost:${port}`);
+  console.log(`App running at http://localhost:${PORT}`);
 })

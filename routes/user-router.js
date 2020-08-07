@@ -3,7 +3,7 @@ const router = express.Router();
 const UserController = require('../controllers/user-controller');
 
 router.post('/register', UserController.register)
-router.post('/login', UserController.login)
+router.post('/login', UserController.postLogin)
 router.post('/login-google', UserController.postGoogleLogin)
 
 
