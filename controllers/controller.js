@@ -28,28 +28,25 @@ class Controller {
 
   }
   static hitZomato(req, res, next) {
+    console.log('Heiii')
     try {
-      if (!req.query.entity_id) {
-        throw { name: 'You dont have quentity id' }
-      } else {
-        axios({
-          method: 'GET',
-          url: `https://developers.zomato.com/api/v2.1/search`,
-          params: {
-            'entity_id': 74,
-            'entity_type': 'city',
-            'sort': 'rating',
-            'count': 20
-          },
-          headers: {
-            'user-key': process.env.ZOMATO_KEY
-          }
+      axios({
+        method: 'GET',
+        url: `https://developers.zomato.com/api/v2.1/search`,
+        params: {
+          'entity_id': 74,
+          'entity_type': 'city',
+          'sort': 'rating',
+          'count': 20
+        },
+        headers: {
+          'user-key': process.env.ZOMATO_KEY
+        }
+      })
+        .then(result => {
+          res.status(200).json(result.data.restaurants)
         })
-          .then(result => {
-            res.status(200).json(result.data.restaurants)
-          })
-          .catch(next)
-      }
+        .catch(next)
     } catch (err) {
       next(err)
     }
