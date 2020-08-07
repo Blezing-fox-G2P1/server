@@ -35,13 +35,13 @@ class Controller {
 
         let input ={
             //paramete url input yang dibutuhkan
-            quantity,
-            size,
-            food
+            quantity: req.body.quantity,
+            size : req.body.size,
+            food : req.body.food
         }
       axios({
         method: 'GET',
-        //sample (bisa di tes) -> 'https://api.edamam.com/api/nutrition-data?app_id=d9f25735&app_key=947d762a17290cc043b8c781c5b41095&ingr=1%20large%20potato'
+        //sample (bisa di tes harusnya) -> 'https://api.edamam.com/api/nutrition-data?app_id=d9f25735&app_key=947d762a17290cc043b8c781c5b41095&ingr=1%20large%20potato'
         url: `https://api.edamam.com/api/nutrition-data?app_id=${process.env.EDAMAM_ID}&app_key=${process.env.EDAMAM_KEY}&ingr=${input.quantity}%20${input.size}%20${input.food}`
       })
       .then(result=>{
